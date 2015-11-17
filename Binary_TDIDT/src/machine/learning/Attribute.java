@@ -1,5 +1,5 @@
 package machine.learning;
-
+//stupid change
 enum Type {
 	binary, categorical, numerical
 }
