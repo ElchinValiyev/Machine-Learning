@@ -1,6 +1,7 @@
 package machine.learning;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -11,7 +12,7 @@ public class DecisionTreeBuilder {
 	private final int OUTCOME_INDEX = 0;
 
 	/**
-	 * Builds tree according TDIDT algorithm.
+	 * Builds tree using TDIDT algorithm.
 	 * 
 	 * @param examples
 	 *            learning data
@@ -30,9 +31,9 @@ public class DecisionTreeBuilder {
 		// if there is no attribute that can split examples
 		if (bestAttribute == null) {
 
-			for (String example[] : examples) {
-				System.out.println(Arrays.toString(example));
-			}
+//			for (String example[] : examples) {
+//				System.out.println(Arrays.toString(example));
+//			}
 
 			node.setLeafNode(true);
 			Tuple outcomes = new Tuple();
@@ -86,8 +87,11 @@ public class DecisionTreeBuilder {
 
 	/**
 	 * Prints the structure of tree in ASCII in form of quadruples:
-	 * "id isLeftBranch attributeID leftChildID rigthChildID", example: "5 yes 14 10 11"
-	 * @param node - the root of a tree or subtree
+	 * "id isLeftBranch attributeID leftChildID rigthChildID", example:
+	 * "5 yes 14 10 11"
+	 * 
+	 * @param node
+	 *            - the root of a tree or subtree
 	 */
 	public void ASCIITree(Node node) {
 		if (node.isLeafNode())
@@ -124,13 +128,34 @@ public class DecisionTreeBuilder {
 		}
 	}
 
-	public static void main(String[] args) throws FileNotFoundException {
+	public void runExperiments(int times, int percent, FileReader reader) throws IOException {
+		reader.prepareForExperiments();
+
+		for (int i = 0; i < times; i++) {
+			Node tree = new Node(1);
+			buildTree(reader.getShuffledExamples(percent), reader.getAttributes(), tree, tree);
+			double correctlyClassified = 0;
+			LinkedList<String[]> testData = reader.getTestExamples(percent);
+			for (String[] example : testData) {
+				if (example[OUTCOME_INDEX].compareTo(tree.getDecision(example)) == 0)
+					correctlyClassified++;
+			}
+
+			System.out.println("Experiment " + i + " => Correct:" + correctlyClassified + " Total:" + testData.size()
+					+ " Accuracy: " + correctlyClassified / testData.size());
+		}
+	}
+
+	public static void main(String[] args) throws IOException {
 		DecisionTreeBuilder builder = new DecisionTreeBuilder();
-		FileReader fileReader = new FileReader("SPECT.test.txt");
+		FileReader fileReader = new FileReader("Union.txt");
 		System.out.println(fileReader.getAttributes().toString());
 		Node tree = new Node(1);
-		builder.buildTree(fileReader.getExamples(), fileReader.getAttributes(), tree, tree);
-		builder.drawTree(tree);
-		builder.ASCIITree(tree);
+
+		builder.runExperiments(100, 200/3, fileReader);
+		// builder.buildTree(fileReader.getExamples(),
+		// fileReader.getAttributes(), tree, tree);
+		// builder.drawTree(tree);
+		// builder.ASCIITree(tree);
 	}
 }

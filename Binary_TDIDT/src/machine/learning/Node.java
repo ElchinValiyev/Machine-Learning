@@ -8,7 +8,7 @@ public class Node {
 	private int id;
 
 	private Attribute testAttribute; // node's attribute
-	private Object testValue;// value to compare with during test
+	private String testValue;// value to compare with during test
 	private boolean isLeafNode = false;
 
 	private Node positiveDescendant;// a.k.a. left branch
@@ -28,7 +28,7 @@ public class Node {
 	}
 
 	/** Get decision based on learning data */
-	public Object getDecision(String[] pattern) {
+	public String getDecision(String[] pattern) {
 		if (isLeafNode) // return answer if leaf node reached
 			return testValue;
 		if (test(pattern))
@@ -39,7 +39,7 @@ public class Node {
 
 	/** Checks which branch pattern belongs to */
 	public boolean test(String[] example) {
-		return example[testAttribute.getId()].equals("1");
+		return example[testAttribute.getId()].equals(testValue);
 	}
 
 	/**
@@ -65,18 +65,21 @@ public class Node {
 			// separating positive and negative attribute values
 			for (String[] pattern : examples) {
 				if (pattern[attributeId].equals("1")) {
+					//positive
 					leftBranch.parse(pattern[OUTCOME_INDEX]);
 				} else {
+					//negative
 					rightBranch.parse(pattern[OUTCOME_INDEX]);
 				}
 			}
 			double currentEntropy = calculateEntropy(leftBranch.getPostitive(), leftBranch.getNegative(),
 					rightBranch.getPostitive(), rightBranch.getNegative());
 
+			// Searching for the best attribute using sum of entropies
 			if (currentEntropy < minEntropy) {
 				minEntropy = currentEntropy;
 				bestAttribute = attribute;
-				testValue = true;
+				testValue = "1";
 			}
 		}
 		setTestAttribute(bestAttribute);
@@ -103,7 +106,8 @@ public class Node {
 		// if (Double.isNaN(result)) {
 		// System.out.println("Error");
 		// }
-		System.out.println(generalEntropy + " - " + result + " = " + (generalEntropy - result));
+		// System.out.println(generalEntropy + " - " + result + " = " +
+		// (generalEntropy - result));
 		return result;
 	}
 
@@ -155,7 +159,7 @@ public class Node {
 		return isLeafNode;
 	}
 
-	public void setTestValue(Object testValue) {
+	public void setTestValue(String testValue) {
 		this.testValue = testValue;
 	}
 
