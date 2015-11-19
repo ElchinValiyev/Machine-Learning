@@ -19,7 +19,6 @@ public class FileReader {
 		scanner = new Scanner(this.dataSource);
 		for (int i = 1; i < scanner.nextLine().split(",").length; i++) {
 			Attribute attribute = new Attribute();
-			attribute.setType(Type.binary);
 			attribute.setId(i);
 			attributes.add(attribute);
 		}

@@ -1,27 +1,14 @@
 package machine.learning;
-//stupid change
-enum Type {
-	binary, categorical, numerical
-}
 
 public class Attribute {
 	private int id;
-	private Type type;
 
 	public void setId(int i) {
 		this.id = i;
 	}
 
-	public void setType(Type type) {
-		this.type = type;
-	}
-
 	public int getId() {
 		return id;
-	}
-
-	public Type getType() {
-		return type;
 	}
 
 	@Override
@@ -31,6 +18,6 @@ public class Attribute {
 
 	@Override
 	public String toString() {
-		return id + ":" + type;
+		return "Attribute:" + id;
 	}
 }

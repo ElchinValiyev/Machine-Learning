@@ -4,9 +4,9 @@ import java.util.List;
 
 public class Node {
 	private final int OUTCOME_INDEX = 0; // index of result in example arrays
-	/** Node number. If even- positive descendant, odd - negative */
-	private int id;
 
+	/** Node number. If even- positive descendant, odd - negative */
+	private final int id;
 	private Attribute testAttribute; // node's attribute
 	private String testValue;// value to compare with during test
 	private boolean isLeafNode = false;
@@ -58,22 +58,23 @@ public class Node {
 		double minEntropy = Double.POSITIVE_INFINITY;
 
 		for (Attribute attribute : attributes) {
-			// System.err.println(attribute.getType());
-			int attributeId = attribute.getId();
 
+			int attributeId = attribute.getId();
 			Tuple leftBranch = new Tuple(), rightBranch = new Tuple();
 			// separating positive and negative attribute values
 			for (String[] pattern : examples) {
 				if (pattern[attributeId].equals("1")) {
-					//positive
+					// positive
 					leftBranch.parse(pattern[OUTCOME_INDEX]);
 				} else {
-					//negative
+					// negative
 					rightBranch.parse(pattern[OUTCOME_INDEX]);
 				}
 			}
 			double currentEntropy = calculateEntropy(leftBranch.getPostitive(), leftBranch.getNegative(),
 					rightBranch.getPostitive(), rightBranch.getNegative());
+			if (!Double.isNaN(currentEntropy))
+				System.out.println(" <= Attribute:" + attributeId);
 
 			// Searching for the best attribute using sum of entropies
 			if (currentEntropy < minEntropy) {
@@ -87,10 +88,10 @@ public class Node {
 	}
 
 	private double calculateEntropy(double leftPos, double leftNeg, double rightPos, double rightNeg) {
-		double total = leftNeg + leftPos + rightNeg + rightPos;
 		double leftTotal = leftNeg + leftPos;
 		double rightTotal = rightNeg + rightPos;
-
+		double total = leftTotal+rightTotal;
+		
 		/** Entropy for the whole split */
 		double generalEntropy = -((leftPos + rightPos) / total) * log2((leftPos + rightPos) / total)
 				- ((leftNeg + rightNeg) / total) * log2((leftNeg + rightNeg) / total);
@@ -103,11 +104,8 @@ public class Node {
 				- (rightTotal / total) * ((rightPos / rightTotal) * log2(rightPos / rightTotal)
 						+ (rightNeg / rightTotal) * log2(rightNeg / rightTotal));
 
-		// if (Double.isNaN(result)) {
-		// System.out.println("Error");
-		// }
-		// System.out.println(generalEntropy + " - " + result + " = " +
-		// (generalEntropy - result));
+		if (!Double.isNaN(result)) // if attribute can split the data
+			System.out.print("Gain=" + generalEntropy + " - " + result + " = " + (generalEntropy - result));
 		return result;
 	}
 
