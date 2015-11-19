@@ -90,8 +90,8 @@ public class Node {
 	private double calculateEntropy(double leftPos, double leftNeg, double rightPos, double rightNeg) {
 		double leftTotal = leftNeg + leftPos;
 		double rightTotal = rightNeg + rightPos;
-		double total = leftTotal+rightTotal;
-		
+		double total = leftTotal + rightTotal;
+
 		/** Entropy for the whole split */
 		double generalEntropy = -((leftPos + rightPos) / total) * log2((leftPos + rightPos) / total)
 				- ((leftNeg + rightNeg) / total) * log2((leftNeg + rightNeg) / total);
@@ -109,12 +109,7 @@ public class Node {
 		return result;
 	}
 
-	/**
-	 * Logarithm base 2 from (1/x). In case x=0 returns 0.
-	 * 
-	 * @param number
-	 *            argument
-	 */
+	/** Logarithm base 2. In case x=0 returns 0. */
 	private double log2(double number) {
 		if (number == 0)
 			return 0;

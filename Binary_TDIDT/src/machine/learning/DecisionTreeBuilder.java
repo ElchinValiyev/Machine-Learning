@@ -1,12 +1,8 @@
 package machine.learning;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.LinkedList;
 
-import org.graphstream.graph.Graph;
-import org.graphstream.graph.implementations.SingleGraph;
+import java.io.IOException;
+import java.util.LinkedList;
 
 public class DecisionTreeBuilder {
 	private final int OUTCOME_INDEX = 0;
@@ -95,30 +91,30 @@ public class DecisionTreeBuilder {
 		ASCIITree(node.getNegativeDescendant());
 	}
 
-	/** Draw graph of a decision tree using GraphStream library */
-	public void drawTree(Node tree) {
-		Graph graph = new SingleGraph("TDIDT");
-		graph.addAttribute("ui.antialias");
-		graph.setStrict(false);
-		graph.addAttribute("ui.stylesheet",
-				"graph {fill-color:#424242;} node { fill-color: #00E676; text-color:#00E676;} node#0 { fill-color: #FF1744; text-color: #FF1744;}");
-		graph.setAutoCreate(true);
-		addNodes(graph, tree, "0");
-		graph.display();
-	}
-
-	/** Adds node to the graph */
-	private void addNodes(Graph graph, Node node, String str) {
-		graph.addNode(str).setAttribute("ui.label",
-				node.isLeafNode() ? node.getTestValue().toString() : "A:" + node.getTestAttribute().getId());
-		if (!node.isLeafNode()) {
-			addNodes(graph, node.getNegativeDescendant(), "0" + str);
-			graph.addEdge("e0" + str, str, "0" + str).setAttribute("ui.label", "n");
-
-			addNodes(graph, node.getPositiveDescendant(), "1" + str);
-			graph.addEdge("e1" + str, str, "1" + str).setAttribute("ui.label", "y");
-		}
-	}
+//	/** Draw graph of a decision tree using GraphStream library */
+//	public void drawTree(Node tree) {
+//		Graph graph = new SingleGraph("TDIDT");
+//		graph.addAttribute("ui.antialias");
+//		graph.setStrict(false);
+//		graph.addAttribute("ui.stylesheet",
+//				"graph {fill-color:#424242;} node { fill-color: #00E676; text-color:#00E676;} node#0 { fill-color: #FF1744; text-color: #FF1744;}");
+//		graph.setAutoCreate(true);
+//		addNodes(graph, tree, "0");
+//		graph.display();
+//	}
+//
+//	/** Adds node to the graph */
+//	private void addNodes(Graph graph, Node node, String str) {
+//		graph.addNode(str).setAttribute("ui.label",
+//				node.isLeafNode() ? node.getTestValue().toString() : "A:" + node.getTestAttribute().getId());
+//		if (!node.isLeafNode()) {
+//			addNodes(graph, node.getNegativeDescendant(), "0" + str);
+//			graph.addEdge("e0" + str, str, "0" + str).setAttribute("ui.label", "n");
+//
+//			addNodes(graph, node.getPositiveDescendant(), "1" + str);
+//			graph.addEdge("e1" + str, str, "1" + str).setAttribute("ui.label", "y");
+//		}
+//	}
 
 	/**
 	 * Empirical evaluation of tree performance.
@@ -160,7 +156,7 @@ public class DecisionTreeBuilder {
 		builder.ASCIITree(tree);
 		
     	//builder.runExperiments(100, 200 / 3, fileReader);
-		// builder.drawTree(tree);
+	    //builder.drawTree(tree);
 	
 	}
 }

@@ -1,13 +1,9 @@
 package machine.learning;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.util.LinkedList;
-import java.util.Random;
-import java.util.Scanner;
-/** Class for simplifying file processing*/
+import java.io.*;
+import java.util.*;
+
+/** Class for simplifying file processing */
 public class FileReader {
 	private Scanner scanner;
 	private LinkedList<Attribute> attributes;
@@ -45,14 +41,16 @@ public class FileReader {
 	public void prepareForExperiments() throws IOException {
 		file = new RandomAccessFile(this.dataSource, "r");
 		int count = 0;
+		// counting number of lines
 		while (file.readLine() != null)
 			count++;
+		// order of examples to be picked
 		sequence = new int[count];
-
+		// initializing order
 		for (int i = 0; i < count; i++) {
 			sequence[i] = i;
 		}
-		lengthOfExample = file.length() / count+1;
+		lengthOfExample = file.length() / count + 1;
 	}
 
 	/** Array shuffling algorithm */
@@ -86,7 +84,7 @@ public class FileReader {
 	}
 
 	/**
-	 * Returns specified percent of data for testing
+	 * Returns 100%-percent of data for testing
 	 * 
 	 * @throws IOException
 	 */
