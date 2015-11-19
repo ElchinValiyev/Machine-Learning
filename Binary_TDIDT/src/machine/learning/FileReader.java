@@ -5,9 +5,9 @@ import java.util.*;
 
 /** Class for simplifying file processing */
 public class FileReader {
-	private Scanner scanner;
+	private Scanner scanner; // reads all data
 	private LinkedList<Attribute> attributes;
-	private File dataSource;
+	private File dataSource; // file with examples
 
 	public FileReader(String dataSource) throws FileNotFoundException {
 		attributes = new LinkedList<>();
@@ -84,7 +84,7 @@ public class FileReader {
 	}
 
 	/**
-	 * Returns 100%-percent of data for testing
+	 * Returns (100-percent)% of data for testing
 	 * 
 	 * @throws IOException
 	 */

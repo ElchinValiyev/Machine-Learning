@@ -12,11 +12,6 @@ public class Attribute {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		return this.id == ((Attribute) obj).id;
-	}
-
-	@Override
 	public String toString() {
 		return "Attribute:" + id;
 	}
