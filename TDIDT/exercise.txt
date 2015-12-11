@@ -1,0 +1,12 @@
+a:c,b:n,c:b,d:t
+a,31,no,no
+a,34,yes,no
+b,32,no,no
+c,20,no,yes
+c,11,no,yes
+c,10,yes,yes
+b,8,yes,yes
+a,23,yes,yes
+a,7,no,yes
+b,21,yes,no
+c,23,yes,no
