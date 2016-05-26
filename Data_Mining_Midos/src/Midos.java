@@ -67,7 +67,7 @@ public class Midos {
             if (sample[attributeCount] == 1) //checking target
                 positives++;
         }
-        populationProbability = positives / populationSize;
+        populationProbability = positives / populationSize; //probability of positive samples
         return data;
     }
 
@@ -96,7 +96,7 @@ public class Midos {
 
 class Hypo implements Comparable<Hypo> {
     private final double Z_SCORE = 2.58; //level of significance alpha=0.001
-    private int[] attributeIndexes;
+    private int[] attributeIndexes; // attributes that hypothesis checks
     private int size; //number of literals in conjucnction
     private double g;
     private double probability;
@@ -107,7 +107,7 @@ class Hypo implements Comparable<Hypo> {
         this.size = size;
         this.attributeIndexes = new int[size];
     }
-
+    /** Calculates g, significanse and probability of positives in sample*/
     void evaluate(int[][] data, double populationProbability) {
         int size = data[0].length;
         double positives = 0; // sample that satisfy and have label 1
