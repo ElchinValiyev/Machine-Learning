@@ -121,7 +121,7 @@ class Hypo implements Comparable<Hypo> {
         }
         this.g = 1.0 * extensionSize / data.length;
         this.probability = (extensionSize == 0) ? 0 : positives / extensionSize;
-        this.isSignificant = Z_SCORE > Math.abs((this.probability - populationProbability) /
+        this.isSignificant = Z_SCORE < Math.abs((this.probability - populationProbability) /
                 Math.sqrt(populationProbability * (1 - populationProbability) / extensionSize));
     }
 
